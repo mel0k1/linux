@@ -2316,7 +2316,6 @@ config CFI_AUTO_DEFAULT
 	  this is the same as booting with "cfi=auto". If disabled,
 	  this is the same as booting with "cfi=kcfi".
 
-source "kernel/livepatch/Kconfig"
 
 config X86_BUS_LOCK_DETECT
 	bool "Split Lock Detect and Bus Lock Detect support"
@@ -2690,7 +2689,6 @@ config ARCH_HIBERNATION_HEADER
 	def_bool y
 	depends on HIBERNATION
 
-source "kernel/power/Kconfig"
 
 
 config X86_APM_BOOT

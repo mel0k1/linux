@@ -1922,7 +1922,6 @@ config DEBUG_CGROUP_REF
 	  Force cgroup css reference count functions to not be inlined so
 	  that they can be kprobed for debugging.
 
-source "kernel/trace/Kconfig"
 
 config PROVIDE_OHCI1394_DMA_INIT
 	bool "Remote debugging over FireWire early on boot"

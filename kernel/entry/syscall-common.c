@@ -2,8 +2,16 @@
 
 #include <linux/entry-common.h>
 
+/* MiLin: kernel/trace/ is carved away, so CONFIG_HAVE_SYSCALL_TRACEPOINTS
+ * does not exist and the syscall tracepoints cannot be defined; local
+ * no-op stubs keep the generic entry paths compilable */
+#ifdef CONFIG_HAVE_SYSCALL_TRACEPOINTS
 #define CREATE_TRACE_POINTS
 #include <trace/events/syscalls.h>
+#else
+static inline void trace_sys_enter(struct pt_regs *regs, long syscall) {}
+static inline void trace_sys_exit(struct pt_regs *regs, long ret) {}
+#endif
 
 /* Out of line to prevent tracepoint code duplication */
 

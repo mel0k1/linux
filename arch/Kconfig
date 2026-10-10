@@ -1807,7 +1807,6 @@ config ARCH_VMLINUX_NEEDS_RELOCS
 config HAVE_GENERIC_TIF_BITS
        bool
 
-source "kernel/gcov/Kconfig"
 
 source "scripts/gcc-plugins/Kconfig"
 
