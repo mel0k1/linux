@@ -1,0 +1,51 @@
+name: milin-ci
+
+# MiLin: carve CI - build the carved tree and boot it in QEMU.
+# Tools/config/initramfs live in mel0k1/MiLin; this repo holds the tree.
+on:
+  push:
+    branches: [milin]
+  pull_request:
+    branches: [milin]
+  workflow_dispatch:
+
+jobs:
+  boot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: checkout MiLin tools
+        uses: actions/checkout@v4
+        with:
+          repository: mel0k1/MiLin
+          ref: main
+          path: milin
+
+      - name: deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential flex bison bc cpio libelf-dev qemu-system-x86
+
+      - name: build kernel
+        run: milin/tools/build.sh
+        env:
+          TREE_DIR: ${{ github.workspace }}
+
+      - name: boot test
+        run: milin/tools/run-qemu.sh
+
+      - name: tree metrics
+        if: always()
+        run: |
+          milin/tools/tree-metrics.sh . milin/build/bzImage >> "${GITHUB_STEP_SUMMARY:-/dev/null}" || true
+          milin/tools/tree-metrics.sh . milin/build/bzImage
+
+      - name: artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: milin-bzImage
+          path: milin/build/bzImage
+          if-no-files-found: ignore
