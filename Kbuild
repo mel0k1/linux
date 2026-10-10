@@ -101,6 +101,7 @@ obj-y			+= kernel/
 obj-y +=
 obj-y			+= mm/
 obj-y			+= fs/
+obj-y			+= security/
 obj-y +=
 obj-y +=
 obj-y +=

@@ -355,7 +355,6 @@ config TELCLOCK
 	  /sys/devices/faux/telco_clock, with a number of files for
 	  controlling the behavior of this hardware.
 
-source "drivers/s390/char/Kconfig"
 
 source "drivers/char/xillybus/Kconfig"
 
