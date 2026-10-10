@@ -111,7 +111,6 @@ source "drivers/video/Kconfig"
 
 source "drivers/accel/Kconfig"
 
-source "sound/Kconfig"
 
 source "drivers/hid/Kconfig"
 

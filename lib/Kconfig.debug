@@ -750,7 +750,6 @@ endmenu
 
 menu "Networking Debugging"
 
-source "net/Kconfig.debug"
 
 endmenu # "Networking Debugging"
 
