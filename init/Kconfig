@@ -2317,3 +2317,68 @@ config ARCH_HAS_SYNC_CORE_BEFORE_USERMODE
 # <asm/syscall_wrapper.h>.
 config ARCH_HAS_SYSCALL_WRAPPER
 	def_bool n
+
+# ------------------------------------------------------------------
+# MiLin: внешний initrd и его декомпрессоры живут здесь (init/),
+# потому что usr/ (built-in initramfs) вырезан из дерева. Блоки
+# RD_* перенесены дословно из usr/Kconfig (v7.2).
+# ------------------------------------------------------------------
+menu "External initrd decompression"
+
+config RD_GZIP
+	bool "Support initial ramdisk/ramfs compressed using gzip"
+	default y
+	select DECOMPRESS_GZIP
+	help
+	  Support loading of a gzip encoded initial ramdisk or cpio buffer.
+	  If unsure, say Y.
+
+config RD_BZIP2
+	bool "Support initial ramdisk/ramfs compressed using bzip2"
+	default y
+	select DECOMPRESS_BZIP2
+	help
+	  Support loading of a bzip2 encoded initial ramdisk or cpio buffer
+	  If unsure, say N.
+
+config RD_LZMA
+	bool "Support initial ramdisk/ramfs compressed using LZMA"
+	default y
+	select DECOMPRESS_LZMA
+	help
+	  Support loading of a LZMA encoded initial ramdisk or cpio buffer
+	  If unsure, say N.
+
+config RD_XZ
+	bool "Support initial ramdisk/ramfs compressed using XZ"
+	default y
+	select DECOMPRESS_XZ
+	help
+	  Support loading of a XZ encoded initial ramdisk or cpio buffer.
+	  If unsure, say N.
+
+config RD_LZO
+	bool "Support initial ramdisk/ramfs compressed using LZO"
+	default y
+	select DECOMPRESS_LZO
+	help
+	  Support loading of a LZO encoded initial ramdisk or cpio buffer
+	  If unsure, say N.
+
+config RD_LZ4
+	bool "Support initial ramdisk/ramfs compressed using LZ4"
+	default y
+	select DECOMPRESS_LZ4
+	help
+	  Support loading of a LZ4 encoded initial ramdisk or cpio buffer
+	  If unsure, say N.
+
+config RD_ZSTD
+	bool "Support initial ramdisk/ramfs compressed using ZSTD"
+	default y
+	select DECOMPRESS_ZSTD
+	help
+	  Support loading of a ZSTD encoded initial ramdisk or cpio buffer.
+	  If unsure, say N.
+
+endmenu

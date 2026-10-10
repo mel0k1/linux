@@ -607,7 +607,10 @@ static int __init initramfs_async_setup(char *str)
 __setup("initramfs_async=", initramfs_async_setup);
 
 extern char __initramfs_start[];
-extern unsigned long __initramfs_size;
+/* MiLin: usr/ (built-in initramfs blob) removed from the tree;
+ * the blob is always empty, we boot from an external initrd
+ * unpacked by the very same code path */
+unsigned long __initramfs_size = 0;
 #include <linux/initrd.h>
 #include <linux/kexec.h>
 

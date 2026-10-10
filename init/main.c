@@ -100,6 +100,7 @@
 #include <linux/jump_label.h>
 #include <linux/kcsan.h>
 #include <linux/init_syscalls.h>
+#include <linux/kdev_t.h>
 #include <linux/stackdepot.h>
 #include <linux/randomize_kstack.h>
 #include <linux/pidfs.h>
@@ -1614,10 +1615,22 @@ static int __ref kernel_init(void *unused)
 /* Open /dev/console, for stdin/stdout/stderr, this should never fail */
 void __init console_on_rootfs(void)
 {
-	struct file *file = filp_open("/dev/console", O_RDWR, 0);
+	struct file *file;
+
+	/* MiLin: the initramfs is built unprivileged and carries no device
+	 * nodes (the vanilla default-cpio blob from usr/ is carved away);
+	 * create the initial console node ourselves if it is missing */
+	file = filp_open("/dev/console", O_RDWR, 0);
+	if (IS_ERR(file) && PTR_ERR(file) == -ENOENT) {
+		init_mkdir("/dev", 0755);
+		init_mknod("/dev/console", S_IFCHR | 0600,
+			   new_encode_dev(MKDEV(5, 1)));
+		file = filp_open("/dev/console", O_RDWR, 0);
+	}
 
 	if (IS_ERR(file)) {
-		pr_err("Warning: unable to open an initial console.\n");
+		pr_err("Warning: unable to open an initial console. err=%ld\n",
+		       PTR_ERR(file));
 		return;
 	}
 	init_dup(file);

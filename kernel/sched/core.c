@@ -96,7 +96,14 @@
 #include "smp.h"
 
 #include "../workqueue_internal.h"
+#ifdef CONFIG_IO_URING
 #include "../../io_uring/io-wq.h"
+#else
+/* MiLin: io_uring is carved away, PF_IO_WORKER cannot exist;
+ * stubs only keep the generic scheduler paths compilable */
+static inline void io_wq_worker_sleeping(struct task_struct *tsk) {}
+static inline void io_wq_worker_running(struct task_struct *tsk) {}
+#endif
 #include "../smpboot.h"
 #include "../locking/mutex.h"
 
