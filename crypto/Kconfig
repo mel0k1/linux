@@ -1338,22 +1338,16 @@ endmenu
 
 if !KMSAN # avoid false positives from assembly
 if ARM
-source "arch/arm/crypto/Kconfig"
 endif
 if ARM64
-source "arch/arm64/crypto/Kconfig"
 endif
 if PPC
-source "arch/powerpc/crypto/Kconfig"
 endif
 if RISCV
-source "arch/riscv/crypto/Kconfig"
 endif
 if S390
-source "arch/s390/crypto/Kconfig"
 endif
 if SPARC
-source "arch/sparc/crypto/Kconfig"
 endif
 if X86
 source "arch/x86/crypto/Kconfig"

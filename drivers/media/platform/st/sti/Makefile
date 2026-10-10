@@ -2,4 +2,4 @@
 obj-y += bdisp/
 obj-y += delta/
 obj-y += hva/
-obj-y += stm32/
+obj-y +=
