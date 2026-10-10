@@ -1521,7 +1521,6 @@ config BLK_DEV_INITRD
 
 if BLK_DEV_INITRD
 
-source "usr/Kconfig"
 
 endif
 
@@ -2233,7 +2232,6 @@ config RUST
 
 	  If unsure, say N.
 
-source "rust/kernel/Kconfig.test"
 
 config RUSTC_VERSION_TEXT
 	string

@@ -94,23 +94,23 @@ prepare: $(offsets-file) missing-syscalls $(atomic-checks)
 # ---------------------------------------------------------------------------
 
 obj-y			+= init/
-obj-y			+= usr/
+obj-y +=
 obj-y			+= arch/$(SRCARCH)/
 obj-y			+= $(ARCH_CORE)
 obj-y			+= kernel/
-obj-y			+= certs/
+obj-y +=
 obj-y			+= mm/
 obj-y			+= fs/
 obj-y			+= ipc/
 obj-y			+= security/
 obj-y			+= crypto/
 obj-$(CONFIG_BLOCK)	+= block/
-obj-$(CONFIG_IO_URING)	+= io_uring/
-obj-$(CONFIG_RUST)	+= rust/
+obj-$(CONFIG_IO_URING) +=
+obj-$(CONFIG_RUST) +=
 obj-y			+= $(ARCH_LIB)
 obj-y			+= drivers/
 obj-y			+= sound/
-obj-$(CONFIG_SAMPLES)	+= samples/
+obj-$(CONFIG_SAMPLES) +=
 obj-$(CONFIG_NET)	+= net/
 obj-y			+= virt/
 obj-y			+= $(ARCH_DRIVERS)
