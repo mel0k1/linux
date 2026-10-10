@@ -6,6 +6,7 @@
 # Rewritten to use lists instead of if-statements.
 #
 
+obj-y                   += net/
 obj-y                   += clocksource/
 obj-$(CONFIG_RTC_LIB)           += rtc/
 

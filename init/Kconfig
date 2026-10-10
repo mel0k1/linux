@@ -773,6 +773,7 @@ config CPU_ISOLATION
 
 	  Say Y if unsure.
 
+source "kernel/bpf/Kconfig"
 source "kernel/rcu/Kconfig"
 
 config IKCONFIG

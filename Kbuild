@@ -112,7 +112,8 @@ obj-y			+= $(ARCH_LIB)
 obj-y			+= drivers/
 obj-y +=
 obj-$(CONFIG_SAMPLES) +=
-obj-$(CONFIG_NET) +=
+# MiLin (M5): net возвращён минимальным составом — только AF_UNIX (IPC-транспорт)
+obj-$(CONFIG_NET)	+= net/
 obj-y +=
 obj-y			+= $(ARCH_DRIVERS)
 obj-$(CONFIG_DRM_HEADER_TEST)	+= include/

@@ -20,6 +20,9 @@ source "drivers/Kconfig"
 
 source "fs/Kconfig"
 
+# MiLin (M5): минимальный net — транспорт AF_UNIX для IPC-серверов
+source "net/Kconfig"
+
 
 
 source "lib/Kconfig"

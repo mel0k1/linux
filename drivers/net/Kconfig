@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: GPL-2.0
+#
+# MiLin: drivers/net в минимальном составе (M5).
+# Только loopback: register_netdevice и net/core ссылаются на
+# loopback_net_ops и blackhole_netdev — сетевой транспорт AF_UNIX
+# без хотя бы одного netdev не линкуется. Всё остальное (phy, mdio,
+# dsa, реальные NIC) остаётся вырезанным.
+
+config LOOPBACK
+	tristate "Loopback device"
+	default y
+	help
+	  lo-интерфейс. MiLin не гоняет пакеты, но net/core ожидает
+	  его при регистрации устройств: это минимальный каркас netdev.

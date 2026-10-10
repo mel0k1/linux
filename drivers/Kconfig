@@ -3,6 +3,10 @@ menu "Device Drivers"
 
 # Keep I/O buses first
 source "drivers/pci/Kconfig"
+# MiLin (M5): loopback — сетевой объект, на который ссылаются net/core
+# (loopback_net_ops, blackhole_netdev); единственный член drivers/net,
+# без которого AF_UNIX-транспорт не линкуется
+source "drivers/net/Kconfig"
 
 config PC104
         bool "PC/104 support" if EXPERT

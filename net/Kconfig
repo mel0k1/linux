@@ -1,0 +1,53 @@
+# SPDX-License-Identifier: GPL-2.0
+#
+# MiLin: net возвращён в минимальном составе (M5).
+#
+# Единственная цель — AF_UNIX: транспорт микроядерного IPC. Серверы
+# (супервизор, реестр, драйверы, ФС) общаются сообщениями через
+# SOCK_SEQPACKET-каналы, хэндлы передаются SCM_RIGHTS. Вся протокольная
+# часть inet (ipv4/ipv6/tcp/...) остаётся вырезанной: ядру не нужен
+# сетевой стек, нужен только способ доставлять сообщения между процессами.
+#
+# Файл авторский (upstream net/Kconfig снесён вместе с каталогом),
+# поэтому структуры протоколов здесь нет вообще — только транспорт.
+
+menuconfig NET
+        bool "Networking support"
+        default y
+        # контракт upstream: эти три селекта — цена CONFIG_NET (v7.2)
+        select NLATTR
+        select GENERIC_NET_UTILS
+        select BPF
+
+if NET
+
+config UNIX
+        tristate "Unix domain sockets"
+        help
+          AF_UNIX: IPC-транспорт MiLin. SOCK_SEQPACKET даёт атомарные
+          сообщения с границами (одно сообщение = один пакет), SCM_RIGHTS
+          передаёт хэндлы между процессами. Это весь транспортный контракт
+          микроядерного IPC этапа M5.
+
+config UNIX_DIAG
+        tristate
+        depends on UNIX
+        default n
+
+# скрытые символы контракта: их селектит BPF_SYSCALL (kernel/bpf/Kconfig
+# v7.2), а определения жили в upstream net/Kconfig, который снесён
+config NET_SOCK_MSG
+        bool
+config NET_XGRESS
+        bool
+        select NET_INGRESS
+        select NET_EGRESS
+config PAGE_POOL
+        bool
+# ещё скрытые символы контракта (upstream net/Kconfig снесён)
+config NET_INGRESS
+        bool
+config NET_EGRESS
+        bool
+
+endif # NET
