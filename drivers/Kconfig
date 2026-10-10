@@ -2,14 +2,14 @@
 menu "Device Drivers"
 
 # Keep I/O buses first
-
+source "drivers/pci/Kconfig"
 
 config PC104
-	bool "PC/104 support" if EXPERT
-	help
-	  Expose PC/104 form factor device drivers and options available for
-	  selection and configuration. Enable this option if your target
-	  machine has a PC/104 bus.
+        bool "PC/104 support" if EXPERT
+        help
+          Expose PC/104 form factor device drivers and options available for
+          selection and configuration. Enable this option if your target
+          machine has a PC/104 bus.
 
 source "drivers/base/Kconfig"
 
@@ -77,6 +77,8 @@ source "drivers/char/Kconfig"
 
 
 source "drivers/uio/Kconfig"
+
+source "drivers/video/Kconfig"
 
 
 

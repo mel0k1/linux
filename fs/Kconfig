@@ -114,6 +114,9 @@ config FILE_LOCKING
 
 source "fs/fuse/Kconfig"
 
+source "fs/kernfs/Kconfig"
+source "fs/sysfs/Kconfig"
+
 menu "Caches"
 
 

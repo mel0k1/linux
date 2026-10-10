@@ -6,8 +6,8 @@
 # Rewritten to use lists instead of if-statements.
 #
 
-obj-y			+= clocksource/
-obj-$(CONFIG_RTC_LIB)		+= rtc/
+obj-y                   += clocksource/
+obj-$(CONFIG_RTC_LIB)           += rtc/
 
 
 # GPIO must come after pinctrl as gpios may need to mux pins etc
@@ -15,13 +15,14 @@ obj-$(CONFIG_PINCTRL) +=
 obj-$(CONFIG_GPIOLIB) +=
 
 # LEDs must come before PCI, it is needed by NPEM driver
-
+obj-y                   += pci/
 
 obj-$(CONFIG_PARISC) +=
 obj-$(CONFIG_RAPIDIO) +=
+obj-y                   += video/
 
 # IPMI must come before ACPI in order to provide IPMI opregion support
-obj-y				+= char/ipmi/
+obj-y                           += char/ipmi/
 
 obj-$(CONFIG_ACPI) +=
 
@@ -36,7 +37,7 @@ obj-$(CONFIG_DMADEVICES) +=
 # SOC specific infrastructure drivers.
 obj-$(CONFIG_PM_GENERIC_DOMAINS) +=
 
-obj-y				+= virtio/
+obj-y                           += virtio/
 obj-$(CONFIG_VDPA) +=
 obj-$(CONFIG_XEN) +=
 
@@ -48,8 +49,8 @@ obj-$(CONFIG_RESET_CONTROLLER) +=
 
 # tty/ comes before char/ so that the VT console is the boot-time
 # default.
-obj-y				+= tty/
-obj-y				+= char/
+obj-y                           += tty/
+obj-y                           += char/
 
 # iommu/ comes before gpu as gpu are using iommu controllers
 
@@ -74,7 +75,7 @@ obj-$(CONFIG_HSI) +=
 obj-$(CONFIG_SLIMBUS) +=
 obj-$(CONFIG_ATM) +=
 obj-$(CONFIG_FUSION) +=
-obj-$(CONFIG_UIO)		+= uio/
+obj-$(CONFIG_UIO)               += uio/
 obj-$(CONFIG_VFIO) +=
 obj-$(CONFIG_PCCARD) +=
 obj-$(CONFIG_DIO) +=
@@ -107,7 +108,7 @@ obj-$(CONFIG_CPU_FREQ) +=
 obj-$(CONFIG_CPU_IDLE) +=
 obj-$(CONFIG_MEMSTICK) +=
 obj-$(CONFIG_INFINIBAND) +=
-obj-y				+= firmware/
+obj-y                           += firmware/
 obj-$(CONFIG_FWCTL) +=
 obj-$(CONFIG_CRYPTO) +=
 obj-$(CONFIG_SUPERH) +=
