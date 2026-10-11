@@ -47,6 +47,13 @@ source "drivers/mlin/Kconfig"
 
 source "drivers/char/Kconfig"
 
+# MiLin (M10): восстановленные подсистемы для kdrv-сборки (v7.2)
+source "drivers/i2c/Kconfig"
+source "drivers/power/Kconfig"
+source "drivers/hwmon/Kconfig"
+source "drivers/media/Kconfig"
+source "drivers/dma-buf/Kconfig"
+
 
 
 

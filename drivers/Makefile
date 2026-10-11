@@ -53,9 +53,15 @@ obj-$(CONFIG_RESET_CONTROLLER) +=
 obj-y                           += tty/
 obj-y                           += char/
 
+# MiLin (M10): gpu/i2c/media/power/hwmon восстановлены из v7.2 для kdrv-сборки
+obj-y                           += i2c/ media/
+obj-y                           += power/
+obj-$(CONFIG_HWMON)             += hwmon/
+
 # iommu/ comes before gpu as gpu are using iommu controllers
 
 # gpu/ comes after char for AGP vs DRM startup and after iommu
+obj-y                           += gpu/
 
 obj-$(CONFIG_CONNECTOR) +=
 
@@ -66,7 +72,7 @@ obj-$(CONFIG_PARPORT) +=
 obj-y += base/
 obj-$(CONFIG_MILIN_KDRIVER) += mlin/
 obj-$(CONFIG_LIBNVDIMM) +=
-obj-$(CONFIG_DMA_SHARED_BUFFER) +=
+obj-$(CONFIG_DMA_SHARED_BUFFER) += dma-buf/
 obj-$(CONFIG_NUBUS) +=
 obj-$(CONFIG_ATA) +=
 obj-$(CONFIG_TARGET_CORE) +=
