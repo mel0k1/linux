@@ -32,3 +32,13 @@ config MILIN_AMDGPU_FACADE
 	  (AMD-устройство найдено — точка форвардинга в DRM/TTM).
 
 endif
+
+config MILIN_PINDMA
+	bool "MiLin pinned-DMA region for userspace drivers"
+	depends on MMU
+	default y
+	help
+	  /dev/mlpinned (M12): открытие выделяет непрерывный регион
+	  4 МиБ, mmap отдаёт его процессу, ioctl(MLPIO_GETPHYS/GETSIZE)
+	  возвращает физический адрес базы. Пользователь — userspace-
+	  драйверы устройств с DMA (netd: кольца и буферы e1000).
