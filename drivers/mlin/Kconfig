@@ -38,7 +38,10 @@ config MILIN_PINDMA
 	depends on MMU
 	default y
 	help
-	  /dev/mlpinned (M12): открытие выделяет непрерывный регион
-	  4 МиБ, mmap отдаёт его процессу, ioctl(MLPIO_GETPHYS/GETSIZE)
-	  возвращает физический адрес базы. Пользователь — userspace-
-	  драйверы устройств с DMA (netd: кольца и буферы e1000).
+	  /dev/mlpinned (M12): регион 4 МиБ резервируется из e820
+	  параметром memmap=4M$0x8000000 — его физика факт машины,
+	  а не арифметика page_to_phys (в SPARSEMEM_VMEMMAP-сборке
+	  та врёт). mmap отдаёт регион процессу, ioctl возвращает
+	  физический адрес базы. Пользователь — userspace-драйверы
+	  с DMA (netd: кольца и буферы e1000). Без BUS MASTER-бита
+	  (его ставит сам драйвер через PCI config) DMA не ходит.
