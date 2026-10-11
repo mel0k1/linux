@@ -21,4 +21,14 @@ config MILIN_KDRIVER_DEMO
 	  супервизор проверяет запросы, переключение размещения и отказ
 	  при 'user' (-ENODEV).
 
+config MILIN_AMDGPU_FACADE
+	bool "amdgpu-fac: GPU facade driver for the domain"
+	help
+	  Запросная плоскость amdgpu (M11): клиенты микроядра говорят
+	  протокол mlgpu через /dev/amdgpu (write = запрос, read = ответ),
+	  цикл обслуживает kthread домена. При placement=user протокол
+	  уезжает в userspace-демон gpud (lane "gpu.amdgpu"). Режимы:
+	  facade (amdgpu нет), amdgpu (builtin в kdrv-сборке), hw
+	  (AMD-устройство найдено — точка форвардинга в DRM/TTM).
+
 endif
