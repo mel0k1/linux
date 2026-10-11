@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: GPL-2.0
+
+menuconfig MILIN_KDRIVER
+	bool "MiLin kdriver domain"
+	depends on SYSFS
+	help
+	  Домен драйверов «между ядром и userspace»: каждый драйвер —
+	  отдельный kthread со своей очередью запросов (свой pid, свой
+	  стек), userspace общается с ним через /dev/<name>: write —
+	  запрос, read — ответ. Размещение выбирается политикой при
+	  регистрации (AUTO -> ядро) и переключается на лету через
+	  /sys/class/mlkd/<name>/placement: 'user' отдаёт драйвер
+	  userspace-серверу (UIO-путь), 'kernel' возвращает в домен.
+
+if MILIN_KDRIVER
+
+config MILIN_KDRIVER_DEMO
+	bool "kdemo: sample domain driver"
+	help
+	  Образец драйвера домена (echo/счётчик/инфо) и бут-тест:
+	  супервизор проверяет запросы, переключение размещения и отказ
+	  при 'user' (-ENODEV).
+
+endif

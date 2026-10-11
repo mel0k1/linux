@@ -64,6 +64,7 @@ obj-$(CONFIG_FB_I810) +=
 
 obj-$(CONFIG_PARPORT) +=
 obj-y += base/
+obj-$(CONFIG_MILIN_KDRIVER) += mlin/
 obj-$(CONFIG_LIBNVDIMM) +=
 obj-$(CONFIG_DMA_SHARED_BUFFER) +=
 obj-$(CONFIG_NUBUS) +=
