@@ -366,6 +366,8 @@ config IO_WQ
 
 endmenu
 
+source "fs/nls/Kconfig"
+
 # MiLin (M14): бут-хранение реального железа
 source "fs/ext4/Kconfig"
 source "fs/jbd2/Kconfig"

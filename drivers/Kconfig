@@ -8,6 +8,10 @@ source "drivers/pci/Kconfig"
 # без которого AF_UNIX-транспорт не линкуется
 source "drivers/net/Kconfig"
 
+# MiLin (M15): USB-хосты (клавиатуры на реальном железе)
+source "drivers/usb/Kconfig"
+source "drivers/hid/Kconfig"
+
 # MiLin (M14): бут-хранение и ввод реального железа
 source "drivers/block/Kconfig"
 source "drivers/nvme/Kconfig"
