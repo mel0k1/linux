@@ -5,6 +5,10 @@
 
 menu "File systems"
 
+# MiLin (M14): procfs — контракт userspace (ps, mount-инфо),
+# ext4 — бут-хранение реального железа, jbd2 — журнал ext4
+source "fs/proc/Kconfig"
+
 # Use unaligned word dcache accesses
 config DCACHE_WORD_ACCESS
        bool
@@ -361,3 +365,7 @@ config IO_WQ
 	bool
 
 endmenu
+
+# MiLin (M14): бут-хранение реального железа
+source "fs/ext4/Kconfig"
+source "fs/jbd2/Kconfig"

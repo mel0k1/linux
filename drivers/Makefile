@@ -7,6 +7,13 @@
 #
 
 obj-y                   += net/
+obj-$(CONFIG_BLOCK)     += block/
+obj-$(CONFIG_NVME_CORE) += nvme/
+obj-$(CONFIG_SCSI)      += scsi/
+obj-$(CONFIG_ATA)       += ata/
+obj-$(CONFIG_INPUT)     += input/
+obj-$(CONFIG_SERIO)     += input/serio/
+obj-$(CONFIG_INPUT) +=
 obj-y                   += clocksource/
 obj-$(CONFIG_RTC_LIB)           += rtc/
 

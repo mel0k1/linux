@@ -20,6 +20,9 @@ obj-y :=        open.o read_write.o file_table.o super.o \
 
 obj-$(CONFIG_BUFFER_HEAD)       += buffer.o mpage.o
 obj-$(CONFIG_PROC_FS)           += proc_namespace.o
+obj-$(CONFIG_PROC_FS)           += proc/
+obj-$(CONFIG_JBD2)              += jbd2/
+obj-$(CONFIG_EXT4_FS)           += ext4/
 obj-$(CONFIG_LEGACY_DIRECT_IO)  += direct-io.o
 obj-y +=
 obj-$(CONFIG_EPOLL)             += eventpoll.o

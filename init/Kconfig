@@ -2381,3 +2381,6 @@ config RD_ZSTD
 	  If unsure, say N.
 
 endmenu
+
+# MiLin (M14): блочный слой — контракт бут-хранения реального железа
+source "block/Kconfig"

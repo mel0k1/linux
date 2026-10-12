@@ -8,6 +8,13 @@ source "drivers/pci/Kconfig"
 # без которого AF_UNIX-транспорт не линкуется
 source "drivers/net/Kconfig"
 
+# MiLin (M14): бут-хранение и ввод реального железа
+source "drivers/block/Kconfig"
+source "drivers/nvme/Kconfig"
+source "drivers/scsi/Kconfig"
+source "drivers/ata/Kconfig"
+source "drivers/input/Kconfig"
+
 config PC104
         bool "PC/104 support" if EXPERT
         help
