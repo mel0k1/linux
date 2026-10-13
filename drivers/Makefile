@@ -34,11 +34,11 @@ obj-y                   += video/
 # IPMI must come before ACPI in order to provide IPMI opregion support
 obj-y                           += char/ipmi/
 
-obj-$(CONFIG_ACPI) +=
+obj-$(CONFIG_ACPI) += acpi/
 
 # PnP must come after ACPI since it will eventually need to check if acpi
 # was used and do nothing if so
-obj-$(CONFIG_PNP) +=
+obj-$(CONFIG_PNP) += pnp/
 
 # Many drivers will want to use DMA so this has to be made available
 # really early.

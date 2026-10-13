@@ -33,6 +33,9 @@ source "drivers/base/Kconfig"
 
 source "drivers/firmware/Kconfig"
 
+# MiLin (M17): PnP — select из ACPI, pnpacpi перечисляет ACPI-PNP-устройства
+source "drivers/pnp/Kconfig"
+
 # MiLin (M9): домен драйверов между ядром и userspace
 source "drivers/mlin/Kconfig"
 
