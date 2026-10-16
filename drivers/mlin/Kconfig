@@ -45,3 +45,13 @@ config MILIN_PINDMA
 	  физический адрес базы. Пользователь — userspace-драйверы
 	  с DMA (netd: кольца и буферы e1000). Без BUS MASTER-бита
 	  (его ставит сам драйвер через PCI config) DMA не ходит.
+
+config MILIN_MLTAP
+	tristate "MiLin mltap — frame bridge netdev to userspace"
+	depends on NET
+	default y
+	help
+	  /dev/mltap: ioctl MLTPIO_BIND вешает ETH_P_ALL-тамп на netdev
+	  по имени, write() отправляет фрейм через dev_queue_xmit, read()
+	  отдаёт принятые фреймы из кольца. userspace-стек netd работает
+	  поверх kernel-драйверов (ath9k/virtio-net) без kernel IP-стека.
