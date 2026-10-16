@@ -33,6 +33,9 @@
 #include <linux/ramfs.h>
 #include <linux/sched.h>
 #include <linux/parser.h>
+#include <linux/mm.h>
+#include <linux/vmstat.h>
+#include <linux/statfs.h>
 #include <linux/magic.h>
 #include <linux/slab.h>
 #include <linux/uaccess.h>
@@ -211,8 +214,28 @@ static int ramfs_show_options(struct seq_file *m, struct dentry *root)
 	return 0;
 }
 
+/*
+ * MiLin (M22): простая statfs отдаёт нули в f_blocks/f_bfree — ramfs
+ * «не ограничен», но гости смотрят свободное место (xbps) и читают
+ * нули как «диска нет». ramfs живёт страницами памяти: честные числа —
+ * вся RAM и свободные страницы прямо сейчас.
+ */
+static int ramfs_statfs(struct dentry *dentry, struct kstatfs *buf)
+{
+	u64 id = huge_encode_dev(dentry->d_sb->s_dev);
+
+	buf->f_fsid = u64_to_fsid(id);
+	buf->f_type = dentry->d_sb->s_magic;
+	buf->f_bsize = PAGE_SIZE;
+	buf->f_namelen = NAME_MAX;
+	buf->f_blocks = totalram_pages();
+	buf->f_bfree = global_zone_page_state(NR_FREE_PAGES);
+	buf->f_bavail = buf->f_bfree;
+	return 0;
+}
+
 static const struct super_operations ramfs_ops = {
-	.statfs		= simple_statfs,
+	.statfs		= ramfs_statfs,
 	.drop_inode	= inode_just_drop,
 	.show_options	= ramfs_show_options,
 };
