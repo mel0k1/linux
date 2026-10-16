@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Wireless LAN device configuration (MiLin: только Atheros/ath9k)
+
+menuconfig WLAN
+	bool "Wireless LAN"
+	depends on NET
+	select WIRELESS
+	default y
+
+if WLAN
+
+source "drivers/net/wireless/ath/Kconfig"
+
+endif

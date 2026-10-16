@@ -50,4 +50,22 @@ config NET_INGRESS
 config NET_EGRESS
         bool
 
+
+menuconfig WIRELESS
+	bool "Wireless"
+	default y
+
+if WIRELESS
+
+source "net/wireless/Kconfig"
+source "net/mac80211/Kconfig"
+
+endif # WIRELESS
+
+source "net/rfkill/Kconfig"
+
+config FAILOVER
+	tristate "Generic failover module"
+
+
 endif # NET

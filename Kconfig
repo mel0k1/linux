@@ -23,6 +23,9 @@ source "fs/Kconfig"
 # MiLin (M5): минимальный net — транспорт AF_UNIX для IPC-серверов
 source "net/Kconfig"
 
+# MiLin (M24): crypto API — aes/ccm/gcm для mac80211 (Wi-Fi)
+source "crypto/Kconfig"
+
 
 
 source "lib/Kconfig"

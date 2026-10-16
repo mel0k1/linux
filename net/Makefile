@@ -21,4 +21,8 @@ obj-$(CONFIG_BPF_SYSCALL)       += bpf/
 obj-y                           += netlink/
 obj-y                           += sched/
 
+obj-$(CONFIG_WIRELESS)          += wireless/
+obj-$(CONFIG_MAC80211)          += mac80211/
+obj-$(CONFIG_RFKILL)            += rfkill/
+
 obj-$(CONFIG_UNIX)              += unix/
