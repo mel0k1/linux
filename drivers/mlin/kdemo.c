@@ -1,11 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0
-/*
- * MiLin (M9): kdemo — образец драйвера kdriver-домена и бут-тест.
- *
- * Операции: 'E' — эхо payload'а, 'C' — счётчик (u32 LE, +1 за вызов),
- * 'I' — инфо о домене (pid kthread'а виден из userspace — доказательство,
- * что запрос обработан не ядром в syscall-контексте, а процессом домена).
- */
+/* MiLin: kdemo — образец драйвера домена; 'E' эхо, 'C' счётчик, 'I' инфо. */
 
 #include <linux/kernel.h>
 #include <linux/minmax.h>

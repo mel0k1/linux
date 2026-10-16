@@ -1,14 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0
-/*
- * MiLin (M12): /dev/mlpinned — pinned-DMA регион для userspace-драйверов.
- *
- * Драйвер в userspace (netd поверх UIO) обязан дать NIC физические адреса
- * колец и буферов. Регион резервируется из e820 параметром memmap=
- * (memmap=4M$0x8000000): его физика — факт машины, а не арифметика
- * page_to_phys, которая в SPARSEMEM_VMEMMAP-сборке врёт. Ядро регион
- * не трогает: mmap отдаёт его процессу, ioctl возвращает физический
- * адрес базы. Закрытие fd — регион освобождён. Один регион на fd.
- */
+/* MiLin: /dev/mlpinned — pinned-DMA из e820-резерва (memmap=); mmap + ioctl-физбаза. */
 
 #include <linux/cdev.h>
 #include <linux/device.h>

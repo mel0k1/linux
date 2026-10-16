@@ -1,24 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0
-/*
- * MiLin (M11): amdgpu-fac — фасад amdgpu в kdriver-домене.
- *
- * Запросный цикл GPU живёт в kthread домена (M9): /dev/amdgpu —
- * write() кладёт запрос [op][payload], read() забирает ответ. Клиенты
- * микроядра говорят на mlgpu: INFO/ALLOC/FREE/SUBMIT/WAIT.
- *
- * Размещение — политика (M9): при placement=kernel цикл здесь; при
- * 'user' домен отклоняет операции (-ENODEV), протокол обслуживает
- * userspace-демон gpud через lane шины "gpu.amdgpu" — тот же
- * wire-формат, отдельный state.
- *
- * Связь с amdgpu (M10): режим определяется лениво на первом INFO —
- * драйвер amdgpu регистрируется устройственно позже device_initcall.
- *   facade — amdgpu нет (diet-сборка): эмуляция пула VRAM и заборов;
- *   amdgpu — драйвер builtin (kdrv), устройства нет: запросная
- *           плоскость перед DRM, очереди/буферы фасада;
- *   hw     — найдено AMD-устройство: точка форвардинга в DRM/TTM
- *           (в QEMU AMD-железа нет, поэтому форвардинг не активен).
- */
+/* MiLin: amdgpu-fac — запросный цикл amdgpu в kthread домена; wire [op][payload]. */
 
 #include <linux/kernel.h>
 #include <linux/minmax.h>
@@ -44,7 +25,6 @@ struct fac_state {
         int     mode_done;
 };
 
-/* режим лениво: amdgpu регистрирует pci-драйвер позже нашего initcall */
 static void fac_detect(struct fac_state *st)
 {
         st->mode = MLGPU_MODE_FACADE;
@@ -58,7 +38,6 @@ static void fac_detect(struct fac_state *st)
         st->mode_done = 1;
 }
 
-/* хэндл: магия + номер слота, чтобы чужие u64 отсекались по значению */
 static int fac_slot_of(u64 handle)
 {
         u32 h = (u32)handle;
@@ -128,7 +107,6 @@ static long fac_submit(struct fac_state *st, const u8 *in, u32 inlen,
         if (slot < 0 || !st->used[slot])
                 return -EINVAL;
 
-        /* эмуляция: проход по командному буферу (в hw — foreach_ib в DRM) */
         for (u32 i = 0; i < ndw; i++)
                 sum += get_unaligned_le32(in + sizeof(s) + i * 4);
         st->fences++;
@@ -146,7 +124,6 @@ static long fac_wait(struct fac_state *st, const u8 *in, u32 inlen,
         if (inlen != sizeof(w) || outmax < sizeof(o))
                 return -EMSGSIZE;
         memcpy(&w, in, sizeof(w));
-        /* заборы завершаются синхронно с submit — эмуляция конвейера */
         o.signaled = w.fence && w.fence <= st->fences;
         o.pad = 0;
         memcpy(out, &o, sizeof(o));

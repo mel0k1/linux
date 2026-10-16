@@ -1,16 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0
-/*
- * MiLin (M9): kdriver-домен — драйверы «между ядром и userspace».
- *
- * Каждый драйвер домена — отдельный kthread: свой pid, свой стек,
- * свой цикл запросов; при пробое домен перезапускает его (счётчик
- * restarts). Userspace общается с драйвером через /dev/<name>:
- * write() кладёт запрос, домен обрабатывает его в своём контексте,
- * read() забирает ответ. Размещение — политика: AUTO ставит драйвер
- * в домен ядра, 'user' через sysfs отдаёт его userspace-серверу
- * (UIO-путь), 'kernel' возвращает обратно; операции при 'user'
- * отклоняются с -ENODEV.
- */
+/* MiLin: kdriver-домен — kthread-драйверы; write()=запрос, read()=ответ, placement через sysfs. */
 
 #include <linux/cdev.h>
 #include <linux/completion.h>
@@ -53,7 +42,6 @@ struct mlkd_client {
         u32                     resplen;
 };
 
-/* разобрать очередь: все необработанные запросы получают err */
 static void mlkd_fail_pend(struct mlkd *kd, long err)
 {
         struct mlkd_job *job;
@@ -80,7 +68,6 @@ static int mlkd_thread(void *data)
 
         rc = kd->ops.probe ? kd->ops.probe(kd) : 0;
         if (rc) {
-                /* драйвер не завёлся: домен отпускает тред и держит backoff */
                 mutex_lock(&kd->tm);
                 kd->task = NULL;
                 kd->probe_fail = rc;
@@ -117,14 +104,12 @@ static int mlkd_thread(void *data)
         return 0;
 }
 
-/* tm должен удерживаться */
 static long __mlkd_thread_start(struct mlkd *kd)
 {
         struct task_struct *t;
 
         if (kd->task)
                 return 0;
-        /* драйвер недавно падал: не молотим по кругу */
         if (kd->probe_fail && time_is_before_jiffies(kd->fail_until))
                 return -EAGAIN;
 
@@ -214,7 +199,6 @@ static ssize_t mlkd_write(struct file *f, const char __user *ub,
 
         mutex_lock(&kd->tm);
         if (kd->resolved != MLKD_RS_KERNEL) {
-                /* драйвер в userspace: домен его не обслуживает */
                 mutex_unlock(&kd->tm);
                 rc = -ENODEV;
                 goto out_free;
@@ -281,7 +265,6 @@ static const struct file_operations mlkd_fops = {
         .llseek         = noop_llseek,
 };
 
-/* --- sysfs: /sys/class/mlkd/<name>/{placement,state,requests,restarts} --- */
 
 static ssize_t placement_show(struct device *dev, struct device_attribute *a,
                               char *buf)

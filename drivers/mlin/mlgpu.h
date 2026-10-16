@@ -1,14 +1,11 @@
 /* SPDX-License-Identifier: GPL-2.0 */
-/* MiLin mlgpu: wire-протокол фасада amdgpu (M11).
- * Зеркало в MiLin/userspace/mlgpu.h — менять синхронно.
- * Формат запроса: [ u8 op ][ payload ], ответ — чистый payload.
- */
+/* MiLin mlgpu: wire-протокол фасада amdgpu; зеркало MiLin/userspace/mlgpu.h. */
+
 #ifndef _MLGPU_H
 #define _MLGPU_H
 
 #define MLGPU_API		1
 
-/* op-коды */
 enum {
 	MLGPU_INFO	= 'I',
 	MLGPU_ALLOC	= 'A',
@@ -17,7 +14,6 @@ enum {
 	MLGPU_WAIT	= 'W',
 };
 
-/* режим фасада: связь с amdgpu (M10) */
 enum {
 	MLGPU_MODE_FACADE	= 0,	/* amdgpu нет: эмуляция */
 	MLGPU_MODE_AMDGPU	= 1,	/* драйвер amdgpu в ядре, устройства нет */
@@ -52,7 +48,6 @@ struct mlgpu_submit_in {
 	u64	handle;
 	u32	ndw;
 	u32	pad;
-	/* u32 cmd[ndw] — сразу за структурой */
 };
 
 struct mlgpu_submit_out {

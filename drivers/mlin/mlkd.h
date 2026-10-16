@@ -1,5 +1,3 @@
-/* SPDX-License-Identifier: GPL-2.0 */
-/* MiLin kdriver domain: внутренний контракт ядра */
 #ifndef _MLKD_H
 #define _MLKD_H
 
@@ -16,14 +14,12 @@
 #define MLKD_RESP_MAX           4096
 #define MLKD_MAX_DRIVERS        16
 
-/* желаемое размещение: AUTO решает политика (сейчас -> ядро) */
 enum {
         MLKD_PL_AUTO = 0,
         MLKD_PL_KERNEL,
         MLKD_PL_USER,
 };
 
-/* фактическое размещение */
 enum {
         MLKD_RS_KERNEL = 0,
         MLKD_RS_USER,
@@ -43,7 +39,6 @@ struct mlkd {
         struct mlkd_ops         ops;
         void                    *priv;
 
-        /* домен: kthread-обработчик очереди запросов */
         int                     resolved;       /* MLKD_RS_* */
         unsigned long           requests;
         unsigned long           restarts;
