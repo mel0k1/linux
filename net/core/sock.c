@@ -634,7 +634,7 @@ EXPORT_SYMBOL(sk_dst_check);
 static int sock_bindtoindex_locked(struct sock *sk, int ifindex)
 {
 	int ret = -ENOPROTOOPT;
-#ifdef CONFIG_NETDEVICES
+#ifdef CONFIG_NET
 	struct net *net = sock_net(sk);
 
 	/* Sorry... */
@@ -678,7 +678,7 @@ EXPORT_SYMBOL(sock_bindtoindex);
 static int sock_setbindtodevice(struct sock *sk, sockptr_t optval, int optlen)
 {
 	int ret = -ENOPROTOOPT;
-#ifdef CONFIG_NETDEVICES
+#ifdef CONFIG_NET
 	struct net *net = sock_net(sk);
 	char devname[IFNAMSIZ];
 	int index;
@@ -727,7 +727,7 @@ static int sock_getbindtodevice(struct sock *sk, sockptr_t optval,
 				sockptr_t optlen, int len)
 {
 	int ret = -ENOPROTOOPT;
-#ifdef CONFIG_NETDEVICES
+#ifdef CONFIG_NET
 	int bound_dev_if = READ_ONCE(sk->sk_bound_dev_if);
 	struct net *net = sock_net(sk);
 	char devname[IFNAMSIZ];

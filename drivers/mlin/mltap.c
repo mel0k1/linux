@@ -59,6 +59,8 @@ static int mltap_rx(struct sk_buff *skb, struct net_device *dev,
         u32 flen;
         int mo = 0;
 
+        if (skb->pkt_type == PACKET_OUTGOING)
+                return NET_RX_SUCCESS;          // свои TX-клоны обратно не отдаём
         if (skb_mac_header_was_set(skb)) {
                 mo = (int)(skb_mac_header(skb) - skb->data);
                 flen = skb->len - mo;

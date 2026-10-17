@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: GPL-2.0-only
+config WLAN_VENDOR_INTEL
+	bool "Intel devices"
+	default y
+
+if WLAN_VENDOR_INTEL
+
+source "drivers/net/wireless/intel/iwlwifi/Kconfig"
+
+endif # WLAN_VENDOR_INTEL

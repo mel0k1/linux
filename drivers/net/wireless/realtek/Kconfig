@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: GPL-2.0-only
+config WLAN_VENDOR_REALTEK
+	bool "Realtek devices"
+	default y
+
+if WLAN_VENDOR_REALTEK
+
+source "drivers/net/wireless/realtek/rtw88/Kconfig"
+
+endif # WLAN_VENDOR_REALTEK
