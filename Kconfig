@@ -26,6 +26,9 @@ source "net/Kconfig"
 # MiLin (M24): crypto API — aes/ccm/gcm для mac80211 (Wi-Fi)
 source "crypto/Kconfig"
 
+# MiLin (M27): sound — ALSA core + HDA (intel-контроллер, generic-кодек)
+source "sound/Kconfig"
+
 
 
 source "lib/Kconfig"

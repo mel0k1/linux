@@ -28,5 +28,6 @@ obj-$(CONFIG_PACKET)            += packet/
 obj-$(CONFIG_WIRELESS)          += wireless/
 obj-$(CONFIG_MAC80211)          += mac80211/
 obj-$(CONFIG_RFKILL)            += rfkill/
+obj-$(CONFIG_BT)                += bluetooth/
 
 obj-$(CONFIG_UNIX)              += unix/

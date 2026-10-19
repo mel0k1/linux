@@ -7,6 +7,7 @@
 #
 
 obj-y                   += net/
+obj-$(CONFIG_BT)        += bluetooth/
 obj-$(CONFIG_BLOCK)     += block/
 obj-$(CONFIG_NVME_CORE) += nvme/
 obj-$(CONFIG_SCSI)      += scsi/

@@ -69,6 +69,10 @@ source "net/mac80211/Kconfig"
 
 endif # WIRELESS
 
+# MiLin (M27): Bluetooth — ядро BT (BR/EDR+LE), транспорт HCI. Тест
+# в QEMU — через /dev/vhci (виртуальный контроллер), на железе — btusb.
+source "net/bluetooth/Kconfig"
+
 source "net/rfkill/Kconfig"
 
 config FAILOVER

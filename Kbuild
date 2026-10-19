@@ -65,13 +65,13 @@ missing-syscalls: $(missing-syscalls-file)
 quiet_cmd_check_sha1 = CHKSHA1 $<
       cmd_check_sha1 = \
 	if ! command -v sha1sum >/dev/null; then \
-		echo "warning: cannot check the header due to sha1sum missing"; \
-		exit 0; \
+	        echo "warning: cannot check the header due to sha1sum missing"; \
+	        exit 0; \
 	fi; \
 	if [ "$$(sed -n '$$s:// ::p' $<)" != \
 	     "$$(sed '$$d' $< | sha1sum | sed 's/ .*//')" ]; then \
-		echo "error: $< has been modified." >&2; \
-		exit 1; \
+	        echo "error: $< has been modified." >&2; \
+	        exit 1; \
 	fi; \
 	touch $@
 
@@ -93,27 +93,29 @@ prepare: $(offsets-file) missing-syscalls $(atomic-checks)
 # Ordinary directory descending
 # ---------------------------------------------------------------------------
 
-obj-y			+= init/
+obj-y                   += init/
 obj-y +=
-obj-y			+= arch/$(SRCARCH)/
-obj-y			+= $(ARCH_CORE)
-obj-y			+= kernel/
+obj-y                   += arch/$(SRCARCH)/
+obj-y                   += $(ARCH_CORE)
+obj-y                   += kernel/
 obj-y +=
-obj-y			+= mm/
-obj-y			+= fs/
-obj-y			+= security/
+obj-y                   += mm/
+obj-y                   += fs/
+obj-y                   += security/
 obj-y += crypto/
 obj-y +=
 obj-y +=
 obj-$(CONFIG_BLOCK) += block/
 obj-$(CONFIG_IO_URING) +=
 obj-$(CONFIG_RUST) +=
-obj-y			+= $(ARCH_LIB)
-obj-y			+= drivers/
+obj-y                   += $(ARCH_LIB)
+obj-y                   += drivers/
 obj-y +=
 obj-$(CONFIG_SAMPLES) +=
 # MiLin (M5): net возвращён минимальным составом — только AF_UNIX (IPC-транспорт)
-obj-$(CONFIG_NET)	+= net/
+obj-$(CONFIG_NET)       += net/
 obj-y +=
-obj-y			+= $(ARCH_DRIVERS)
-obj-$(CONFIG_DRM_HEADER_TEST)	+= include/
+obj-y                   += $(ARCH_DRIVERS)
+# MiLin (M27): sound — ALSA core + HDA (контроллер + generic-кодек)
+obj-$(CONFIG_SOUND)     += sound/
+obj-$(CONFIG_DRM_HEADER_TEST)   += include/
